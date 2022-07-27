@@ -51,6 +51,7 @@ public class CustomerController implements CustomerManager{
 		customerList.add(cust);
 		
 		System.out.println(cust.getName() + " has created an Account!");
+		System.out.println("Your new ID number is : " + idCounter);
 		
 		return false;
 	}

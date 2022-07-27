@@ -47,6 +47,7 @@ public class CheckingController implements AccountManager {
 		checkingList.add((Checking) acct);
 		
 		System.out.println("User ID: " + (acct).getUser_id() + " has a new checking account with $" + ((Checking) acct).getInit_deposit());
+		System.out.println("Your new checking account has an ID of: " + idCounter);
 		 
 		return false;
 	}

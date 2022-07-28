@@ -104,8 +104,8 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", date=" + date + ", type=" + type + ", toAcct=" + toAcct + ", amount="
-				+ amount + ", user_id=" + user_id + ", checking_id=" + checking_id + ", savings_id=" + savings_id;
+		return "Transaction ID = " + id + ", Date and Time = " + date + ", Type = " + type + ", To Account = " + toAcct + ", Amount = "
+				+ amount + ", User ID = " + user_id + ", Checking ID = " + checking_id + ", Savings ID = " + savings_id;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.dollarsbank.application;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.InputMismatchException;
@@ -39,6 +40,8 @@ public class Main {
 	private static TransactionManager transactionManager;
 	private static Scanner sc;
 	private static Customer principal;
+	
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	
 	public static void main(String[] args) {
 		

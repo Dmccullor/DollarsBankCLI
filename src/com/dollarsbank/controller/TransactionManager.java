@@ -14,6 +14,6 @@ public interface TransactionManager {
 	
 	public boolean createTransaction(Transaction t) throws AccountNotFoundException;
 	
-	public Transaction findTransactionByUserId(int id) throws TransactionNotFoundException;
+	public List<Transaction> findTransactionsByUserId(int id);
 
 }

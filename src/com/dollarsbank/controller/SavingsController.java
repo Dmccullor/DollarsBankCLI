@@ -10,7 +10,7 @@ import com.dollarsbank.model.Savings;
 
 public class SavingsController implements AccountManager {
 
-	private static int idCounter = 0;
+	private static int idCounter = 1;
 	private static List<Savings> savingsList = new ArrayList<Savings>();
 	
 	static {
@@ -41,14 +41,14 @@ public class SavingsController implements AccountManager {
 	}
 
 	@Override
-	public <A extends Account>boolean createAccount(A acct) {
+	public <A extends Account> A createAccount(A acct) {
 		acct.setId(idCounter++);
 		
 		savingsList.add((Savings) acct);
 		
 		System.out.println("User ID: " + acct.getUser_id() + " has a new savings account with an ID of " + acct.getId());
 		
-		return false;
+		return acct;
 	}
 
 	@Override

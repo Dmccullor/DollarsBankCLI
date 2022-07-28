@@ -12,7 +12,7 @@ public interface CustomerManager {
 	
 	public Customer getCustomerById(int id) throws CustomerNotFoundException;
 	
-	public boolean createCustomer(Customer cust);
+	public Customer createCustomer(Customer cust);
 	
 	public boolean updateCustomer(Customer cust);
 	

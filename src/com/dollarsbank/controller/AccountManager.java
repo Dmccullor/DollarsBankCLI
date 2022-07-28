@@ -17,6 +17,6 @@ public interface AccountManager {
 	
 	public <A extends Account> boolean updateAccount(A acct);
 
-	public <A extends Account> boolean createAccount(A acct);
+	public <A extends Account> A createAccount(A acct);
 
 }

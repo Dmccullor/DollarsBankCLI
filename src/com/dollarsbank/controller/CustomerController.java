@@ -12,7 +12,7 @@ import com.dollarsbank.model.Customer;
 
 public class CustomerController implements CustomerManager{
 	
-	private static int idCounter = 0;
+	private static int idCounter = 1;
 	private static List<Customer> customerList = new ArrayList<Customer>();
 	
 	static {
@@ -44,16 +44,16 @@ public class CustomerController implements CustomerManager{
 	}
 
 	@Override
-	public boolean createCustomer(Customer cust) {
+	public Customer createCustomer(Customer cust) {
 		
 		cust.setId(idCounter++);
 		
 		customerList.add(cust);
 		
 		System.out.println(cust.getName() + " has created an Account!");
-		System.out.println("Your new ID number is : " + idCounter);
+		System.out.println("Your new ID number is : " + cust.getId());
 		
-		return false;
+		return cust;
 	}
 
 	@Override
@@ -65,7 +65,6 @@ public class CustomerController implements CustomerManager{
 				
 				customerList.remove(c);
 				customerList.add(cust);
-				System.out.println("Customer " + cust.getName() + " has been updated.");
 			}
 		}
 		return false;

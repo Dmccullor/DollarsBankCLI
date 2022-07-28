@@ -78,7 +78,7 @@ public class Customer {
 		this.checking_id = checking_id;
 	}
 	
-	public boolean getHas_savings(boolean has_savings) {
+	public boolean getHas_savings() {
 		return has_savings;
 	}
 	
@@ -96,8 +96,11 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", checking_id=" 
-	+ checking_id + ", has savings account=" + has_savings + ", savings_id=" + savings_id + "]";
+		return "ID = " + id + ", Name = " + name + ", Address = " + address + ", Phone # = " + phone + 
+				", Checking ID = " + checking_id + ", Has a Savings Account = " + has_savings + ", Savings ID = "
+				+ savings_id;
 	}
+
+	
 	
 }

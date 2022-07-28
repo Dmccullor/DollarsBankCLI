@@ -12,6 +12,9 @@ public class Savings extends Account{
 	
 	public Savings(int id, double amount, int user_id, int checking_id) {
 		super(id, amount, user_id);
+		this.id = id;
+		this.amount = amount;
+		this.user_id = user_id;
 		this.checking_id = checking_id;
 	}
 

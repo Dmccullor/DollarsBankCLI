@@ -14,7 +14,10 @@ public class Checking extends Account{
 	
 	public Checking(int id, double amount, double init_deposit, int user_id, int savings_id) {
 		super(id, amount, user_id);
+		this.id = id;
+		this.amount = amount;
 		this.init_deposit = init_deposit;
+		this.user_id = user_id;
 		this.savings_id = savings_id;
 	}
 

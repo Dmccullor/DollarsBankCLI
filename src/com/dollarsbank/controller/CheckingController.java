@@ -10,7 +10,7 @@ import com.dollarsbank.model.Checking;
 
 public class CheckingController implements AccountManager {
 
-	private static int idCounter = 0;
+	private static int idCounter = 1;
 	private static List<Checking> checkingList = new ArrayList<Checking>();
 	
 	static {
@@ -41,15 +41,15 @@ public class CheckingController implements AccountManager {
 	}
 
 	@Override
-	public <A extends Account> boolean createAccount(A acct) {
+	public <A extends Account> A createAccount(A acct) {
 		acct.setId(idCounter++);
 		 
 		checkingList.add((Checking) acct);
 		
-		System.out.println("User ID: " + (acct).getUser_id() + " has a new checking account with $" + ((Checking) acct).getInit_deposit());
-		System.out.println("Your new checking account has an ID of: " + idCounter);
+		System.out.println("User ID: " + acct.getUser_id() + " has a new checking account with $" + ((Checking) acct).getInit_deposit());
+		System.out.println("Your new checking account has an ID of: " + acct.getId());
 		 
-		return false;
+		return acct;
 	}
 
 	@Override

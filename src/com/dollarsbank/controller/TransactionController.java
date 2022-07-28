@@ -16,7 +16,7 @@ import com.dollarsbank.application.Main.ToAcct;
 
 public class TransactionController implements TransactionManager {
 
-	private static int idCounter = 0;
+	private static int idCounter = 1;
 	private static List<Transaction> transactionList = new ArrayList<Transaction>();
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	
@@ -144,19 +144,18 @@ public class TransactionController implements TransactionManager {
 	}
 
 	@Override
-	public Transaction findTransactionByUserId(int id) throws TransactionNotFoundException {
+	public List<Transaction> findTransactionsByUserId(int id) {
 		
-		Optional<Transaction> tran = transactionList.stream()
-				.filter((t) -> t.getUser_id() == id)
-				.findFirst();
+		List<Transaction> userTransactionList = new ArrayList<Transaction>();
 		
-		if(tran.isEmpty()) {
-			throw new TransactionNotFoundException(id);
+		for(Transaction t: transactionList) {
+			if(t.getUser_id() == id) {
+				userTransactionList.add(t);
+			}
 		}
 		
-		Transaction tranObj = tran.get();
-		
-		return tranObj;
+		return userTransactionList;
 	}
+
 
 }

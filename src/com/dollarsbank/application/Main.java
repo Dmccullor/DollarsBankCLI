@@ -134,7 +134,7 @@ public class Main {
 				createCheckingAccount();
 			}
 			
-			Checking newChecking = new Checking(0, init_amount, init_amount, user_id, 0);
+			Checking newChecking = new Checking(0, 0, init_amount, user_id, 0);
 			Checking newAcct = checkingManager.createAccount(newChecking);
 			principal.setChecking_id(newAcct.getId());
 			manager.updateCustomer(principal);
@@ -406,26 +406,26 @@ public class Main {
 			}
 			else {
 				savings_id = principal.getSavings_id();
-				System.out.println("To which account would you like to make a withdrawal?" +
-						"1.) Checking" +
-						"2.) Savings");
+				System.out.println("To which account would you like to make a transfer?" +
+						"\n1.) Checking" +
+						"\n2.) Savings");
 				
 				int selection = sc.nextInt();
 				sc.nextLine();
 				
 				if(selection == 1) {
 					toAcct = ToAcct.CHECKING;
-					accountBalance = (checkingManager.getAccountByUserId(user_id)).getAmount();
+					accountBalance = (savingsManager.getAccountByUserId(user_id)).getAmount();
 				}
 				else if(selection == 2) {
 					toAcct = ToAcct.SAVINGS;
-					accountBalance = (savingsManager.getAccountByUserId(user_id)).getAmount();
+					accountBalance = (checkingManager.getAccountByUserId(user_id)).getAmount();
 				}
 				else {
 					System.out.println("You must either select 1 or 2.");
 				}
 				
-				System.out.println("How much do you want to withdraw?");
+				System.out.println("How much do you want to transfer?");
 				double amount = sc.nextDouble();
 				
 				if(amount > accountBalance) {

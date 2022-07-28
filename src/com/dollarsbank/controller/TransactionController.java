@@ -88,7 +88,7 @@ public class TransactionController implements TransactionManager {
 			
 			Checking currentAccount = (Checking) checkingManager.getAccountByUserId(tran.getUser_id());
 			
-			currentAccount.setAmount(currentAccount.getAmount() + tran.getAmount());
+			currentAccount.setAmount(currentAccount.getAmount() - tran.getAmount());
 			
 			checkingManager.updateAccount(currentAccount);
 			

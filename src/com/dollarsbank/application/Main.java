@@ -116,6 +116,7 @@ public class Main {
 		} catch(InputMismatchException e) {
 			
 			System.out.println("Input Invalid. Please start over and try again.");
+			sc.next();
 			createCustomer();
 		}
 		
@@ -152,6 +153,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input Invalid. Please start over and try again.");
+			sc.next();
 			createCheckingAccount();
 		} catch (AccountNotFoundException e) {
 			e.getMessage();
@@ -187,6 +189,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input is invalid. Please try again.");
+			sc.next();
 			loginUser();
 		} catch (InvalidCredentialsException e) {
 			e.getMessage();
@@ -245,6 +248,8 @@ public class Main {
 				
 			} catch(InputMismatchException e) {
 				System.out.println("Input is invalid. Please try again.");
+				sc.next();
+				userMenu();
 			} catch(ConcurrentModificationException e) {
 				
 			}
@@ -266,7 +271,8 @@ public class Main {
 			else {
 				System.out.println("To which account would you like to make a deposit?" +
 						"\n1.) Checking" +
-						"\n2.) Savings");
+						"\n2.) Savings" +
+						"\n3.) Back");
 				
 				int selection = sc.nextInt();
 				sc.nextLine();
@@ -279,8 +285,12 @@ public class Main {
 					toAcct = ToAcct.SAVINGS;
 					savings_id = principal.getSavings_id();
 				}
+				else if(selection ==3) {
+					userMenu();
+				}
 				else {
-					System.out.println("You must either select 1 or 2.");
+					System.out.println("You must either select 1, 2 or 3.");
+					makeDeposit();
 				}
 			}
 			
@@ -288,12 +298,18 @@ public class Main {
 			Double amount = sc.nextDouble();
 			sc.nextLine();
 			
+			if(amount <= 0) {
+				System.out.println("Amount must be greater than 0");
+				makeDeposit();
+			}
+			
 			Transaction tran = new Transaction(0, LocalDateTime.now(), type, toAcct, amount, user_id, checking_id, savings_id);
 			transactionManager.createTransaction(tran);
 			System.out.println("Deposit initiated!");
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input invalid. Please try again.");
+			sc.nextLine();
 			makeDeposit();
 		} catch (AccountNotFoundException e) {
 			e.getMessage();
@@ -317,7 +333,8 @@ public class Main {
 				savings_id = principal.getSavings_id();
 				System.out.println("To which account would you like to make a withdrawal?" +
 						"\n1.) Checking" +
-						"\n2.) Savings");
+						"\n2.) Savings" +
+						"\n3.) Back");
 				
 				int selection = sc.nextInt();
 				sc.nextLine();
@@ -330,8 +347,11 @@ public class Main {
 					toAcct = ToAcct.SAVINGS;
 					accountBalance = (savingsManager.getAccountByUserId(user_id)).getAmount();
 				}
+				else if(selection ==3) {
+					userMenu();
+				}
 				else {
-					System.out.println("You must either select 1 or 2.");
+					System.out.println("You must either select 1, 2 or 3.");
 					makeWithdrawal();
 				}
 			}
@@ -343,6 +363,9 @@ public class Main {
 				System.out.println("You don't have enough money in your account. Your children are now in the custody of DollarsBank.");
 				userMenu();
 			}
+			else if(amount <= 0) {
+				System.out.println("Amount must be greater than 0");
+			}
 			else {
 				Transaction tran = new Transaction(0, LocalDateTime.now(), type, toAcct, amount, user_id, checking_id, savings_id);
 				transactionManager.createTransaction(tran);
@@ -352,6 +375,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input invalid. Please start over and try again.");
+			sc.next();
 		} catch (AccountNotFoundException e) {
 			e.getMessage();
 		}
@@ -387,6 +411,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input invalid. Please start over and try again.");
+			sc.next();
 			makeWithdrawal();
 		}
 	}
@@ -408,7 +433,8 @@ public class Main {
 				savings_id = principal.getSavings_id();
 				System.out.println("To which account would you like to make a transfer?" +
 						"\n1.) Checking" +
-						"\n2.) Savings");
+						"\n2.) Savings" +
+						"\n3.) Back");
 				
 				int selection = sc.nextInt();
 				sc.nextLine();
@@ -421,8 +447,11 @@ public class Main {
 					toAcct = ToAcct.SAVINGS;
 					accountBalance = (checkingManager.getAccountByUserId(user_id)).getAmount();
 				}
+				else if(selection == 3) {
+					userMenu();
+				}
 				else {
-					System.out.println("You must either select 1 or 2.");
+					System.out.println("You must either select 1, 2 or 3.");
 				}
 				
 				System.out.println("How much do you want to transfer?");
@@ -431,6 +460,10 @@ public class Main {
 				if(amount > accountBalance) {
 					System.out.println("You don't have enough funds to transfer that amount.");
 					userMenu();
+				}
+				else if(amount <= 0) {
+					System.out.println("Amount must be greater than 0");
+					transferFunds();
 				}
 				else {
 					Transaction tran = new Transaction(0, LocalDateTime.now(), type, toAcct, amount, user_id, checking_id, savings_id);
@@ -441,6 +474,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input invalid. Please try again");
+			sc.next();
 			transferFunds();
 		} catch (AccountNotFoundException e) {
 			e.getMessage();
@@ -467,6 +501,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Input invalid. Please try again.");
+			sc.next();
 			viewTransactions();
 		}
 	}
@@ -491,6 +526,7 @@ public class Main {
 			
 		} catch(InputMismatchException e) {
 			System.out.println("Account not found somehow...");
+			sc.next();
 		} catch (AccountNotFoundException e) {
 			e.getMessage();
 		}

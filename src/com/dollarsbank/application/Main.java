@@ -234,14 +234,13 @@ public class Main {
 					showInfo();
 					break;
 				case 7:
-					main(null);
 					break;
 				default:
 					System.out.println("Please enter a number between 1 and 7");
 					break;
 				}
 				
-				if(option == 3) {
+				if(option == 7) {
 					break;
 				}
 				

@@ -27,6 +27,7 @@ public class SavingsController implements AccountManager {
 			List<Savings> input = (List<Savings>) i.readObject();
 			for (Savings cust : input) {
 				savingsList.add(cust);
+				idCounter++;
 			}
 			i.close();
 			f.close();

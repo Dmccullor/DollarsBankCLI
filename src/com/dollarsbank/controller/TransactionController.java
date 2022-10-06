@@ -37,6 +37,7 @@ public class TransactionController implements TransactionManager {
 			List<Transaction> input = (List<Transaction>) i.readObject();
 			for (Transaction cust : input) {
 				transactionList.add(cust);
+				idCounter++;
 			}
 			i.close();
 			f.close();

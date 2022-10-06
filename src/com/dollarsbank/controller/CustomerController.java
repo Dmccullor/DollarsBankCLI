@@ -26,6 +26,7 @@ public class CustomerController implements CustomerManager{
 			List<Customer> input = (List<Customer>) i.readObject();
 			for (Customer cust : input) {
 				customerList.add(cust);
+				idCounter++;
 			}
 			i.close();
 			f.close();

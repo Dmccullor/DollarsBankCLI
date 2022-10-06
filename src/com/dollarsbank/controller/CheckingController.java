@@ -27,6 +27,7 @@ public class CheckingController implements AccountManager {
 			List<Checking> input = (List<Checking>) i.readObject();
 			for (Checking cust : input) {
 				checkingList.add(cust);
+				idCounter++;
 			}
 			i.close();
 			f.close();

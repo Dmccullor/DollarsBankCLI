@@ -1,7 +1,9 @@
 package com.dollarsbank.model;
 
 public class Savings extends Account{
-	
+
+	private static final long serialVersionUID = 2730000114751302015L;
+
 	private int id;
 	
 	private double amount;

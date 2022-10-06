@@ -1,5 +1,10 @@
 package com.dollarsbank.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,16 +12,27 @@ import java.util.Optional;
 import com.dollarsbank.exceptions.AccountNotFoundException;
 import com.dollarsbank.model.Account;
 import com.dollarsbank.model.Checking;
+import com.dollarsbank.model.Customer;
 
 public class CheckingController implements AccountManager {
 
 	private static int idCounter = 1;
 	private static List<Checking> checkingList = new ArrayList<Checking>();
 	
-	static {
-		checkingList.add(new Checking(idCounter++, 10000, 1000, 1, 1));
-		checkingList.add(new Checking(idCounter++, 5000, 1200, 2, 2));
-		checkingList.add(new Checking(idCounter++, 1000, 500, 3, 0));
+	static {		
+		try {
+			FileInputStream f = new FileInputStream("checking.txt");
+			ObjectInputStream i = new ObjectInputStream(f);
+			@SuppressWarnings("unchecked")
+			List<Checking> input = (List<Checking>) i.readObject();
+			for (Checking cust : input) {
+				checkingList.add(cust);
+			}
+			i.close();
+			f.close();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

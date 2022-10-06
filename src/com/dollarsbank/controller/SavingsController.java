@@ -1,11 +1,17 @@
 package com.dollarsbank.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.dollarsbank.exceptions.AccountNotFoundException;
 import com.dollarsbank.model.Account;
+import com.dollarsbank.model.Customer;
 import com.dollarsbank.model.Savings;
 
 public class SavingsController implements AccountManager {
@@ -14,9 +20,21 @@ public class SavingsController implements AccountManager {
 	private static List<Savings> savingsList = new ArrayList<Savings>();
 	
 	static {
-		savingsList.add(new Savings(idCounter++, 10000, 1, 1));
-		savingsList.add(new Savings(idCounter++, 15000, 2, 2));
+		try {
+			FileInputStream f = new FileInputStream("savings.txt");
+			ObjectInputStream i = new ObjectInputStream(f);
+			@SuppressWarnings("unchecked")
+			List<Savings> input = (List<Savings>) i.readObject();
+			for (Savings cust : input) {
+				savingsList.add(cust);
+			}
+			i.close();
+			f.close();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
+	
 	
 	
 	@Override

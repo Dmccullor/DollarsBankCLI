@@ -1,7 +1,11 @@
 package com.dollarsbank.model;
 
-public abstract class Account {
+import java.io.Serializable;
+
+public abstract class Account implements Serializable {
 	
+	private static final long serialVersionUID = 6868634116598129480L;
+
 	private int id;
 	
 	private double amount;

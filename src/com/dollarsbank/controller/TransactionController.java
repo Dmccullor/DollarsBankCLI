@@ -1,5 +1,10 @@
 package com.dollarsbank.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,6 +14,7 @@ import java.util.Optional;
 import com.dollarsbank.exceptions.AccountNotFoundException;
 import com.dollarsbank.exceptions.TransactionNotFoundException;
 import com.dollarsbank.model.Checking;
+import com.dollarsbank.model.Customer;
 import com.dollarsbank.model.Savings;
 import com.dollarsbank.model.Transaction;
 import com.dollarsbank.application.Main.Type;
@@ -24,15 +30,21 @@ public class TransactionController implements TransactionManager {
 	private static AccountManager savingsManager = new SavingsController();
 	
 	static {
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.CHECKING, 1000.00, 1, 1, 0));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.CHECKING, 9000.00, 1, 1, 0));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.SAVINGS, 10000.00, 1, 1, 1));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.CHECKING, 1200.00, 2, 2, 0));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.CHECKING, 3800.00, 2, 2, 2));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.SAVINGS, 15000.00, 2, 2, 2));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.CHECKING, 500.00, 3, 3, 0));
-		transactionList.add(new Transaction(idCounter++, LocalDateTime.now(), Type.DEPOSIT, ToAcct.CHECKING, 500.00, 3, 3, 0));
+		try {
+			FileInputStream f = new FileInputStream("transactions.txt");
+			ObjectInputStream i = new ObjectInputStream(f);
+			@SuppressWarnings("unchecked")
+			List<Transaction> input = (List<Transaction>) i.readObject();
+			for (Transaction cust : input) {
+				transactionList.add(cust);
+			}
+			i.close();
+			f.close();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
+	
 	
 	@Override
 	public List<Transaction> getAllTransactions() {

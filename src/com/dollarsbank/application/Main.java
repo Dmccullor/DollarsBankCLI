@@ -1,7 +1,13 @@
 package com.dollarsbank.application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.InputMismatchException;
@@ -72,6 +78,7 @@ public class Main {
 				case 2:
 					loginUser();
 				case 3:
+					writeData();
 					break;
 					
 				default:
@@ -89,6 +96,45 @@ public class Main {
 		}
 	}
 	
+	public static void writeData() {
+		try {
+			FileOutputStream f = new FileOutputStream(new File("customers.txt"));
+			ObjectOutputStream customerStorage = new ObjectOutputStream(f);
+			FileOutputStream f1 = new FileOutputStream(new File("checking.txt"));
+			ObjectOutputStream checkingStorage = new ObjectOutputStream(f1);
+			FileOutputStream f2 = new FileOutputStream(new File("savings.txt"));
+			ObjectOutputStream savingsStorage = new ObjectOutputStream(f2);
+			FileOutputStream f3 = new FileOutputStream(new File("transactions.txt"));
+			ObjectOutputStream transactionStorage = new ObjectOutputStream(f3);
+			
+			List<Customer> customerList = manager.getAllCustomers();
+			List<?> checkingList = checkingManager.getAllAccounts();
+			List<?> savingsList = savingsManager.getAllAccounts();
+			List<Transaction> transactionList = transactionManager.getAllTransactions();
+			
+			customerStorage.writeObject(customerList);
+			customerStorage.close();
+			f.close();
+			
+			checkingStorage.writeObject(checkingList);
+			checkingStorage.close();
+			f1.close();
+			
+			savingsStorage.writeObject(savingsList);
+			savingsStorage.close();
+			f2.close();
+			
+			transactionStorage.writeObject(transactionList);
+			transactionStorage.close();
+			f3.close();
+
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void createCustomer() {
 		
@@ -173,6 +219,7 @@ public class Main {
 			String password = sc.nextLine();
 			
 			List<Customer> customerList = manager.getAllCustomers();
+			System.out.println(customerList);
 			
 			Optional<Customer> cust = customerList.stream()
 					.filter((c) -> (c.getId() == user_id && c.getPassword().equals(password)))

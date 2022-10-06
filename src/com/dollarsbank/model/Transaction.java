@@ -1,5 +1,6 @@
 package com.dollarsbank.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.dollarsbank.application.Main.ToAcct;
@@ -7,8 +8,10 @@ import com.dollarsbank.application.Main.Type;
 
 
 
-public class Transaction {
-	
+public class Transaction implements Serializable {
+
+	private static final long serialVersionUID = 446946461441684181L;
+
 	private int id;
 	
 	private LocalDateTime date;

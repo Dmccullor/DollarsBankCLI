@@ -1,5 +1,8 @@
 package com.dollarsbank.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +18,20 @@ public class CustomerController implements CustomerManager{
 	private static int idCounter = 1;
 	private static List<Customer> customerList = new ArrayList<Customer>();
 	
-	static {
-		customerList.add(new Customer(idCounter++, "Mary Beth", "123 Pine St.", 3105768977L, "pass123", 1, true, 1));
-		customerList.add(new Customer(idCounter++, "John Doe", "827 New Haven Dr.", 9726985644L, "pass123", 2, true, 2));
-		customerList.add(new Customer(idCounter++, "Trey Songz", "1422 Queens Ave.", 2108675309L, "pass123", 3, false, 0));
+	static {		
+		try {
+			FileInputStream f = new FileInputStream("customers.txt");
+			ObjectInputStream i = new ObjectInputStream(f);
+			@SuppressWarnings("unchecked")
+			List<Customer> input = (List<Customer>) i.readObject();
+			for (Customer cust : input) {
+				customerList.add(cust);
+			}
+			i.close();
+			f.close();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
